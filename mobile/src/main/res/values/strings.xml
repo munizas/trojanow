@@ -6,6 +6,11 @@
     <string name="action_settings">Settings</string>
     <string name="action_logout">Logout</string>
 
+    <string name="radio_button_none">None</string>
+    <string name="radio_button_humidity">Humidity</string>
+    <string name="radio_button_temperature">Temperature</string>
+    <string name="radio_button_pressure">Pressure</string>
+
     <style name="DefaultButtonText">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>

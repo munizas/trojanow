@@ -82,25 +82,10 @@ public class PostListActivity extends ListActivity {
             case R.id.action_logout:
                 logout();
                 return true;
-            case R.id.action_test_gps:
-                showGpsData();
-                return true;
             case R.id.action_new_post:
                 startActivity(new Intent(PostListActivity.this, NewPostActivity.class));
             default:
                 return super.onOptionsItemSelected(item);
-        }
-    }
-
-    private void showGpsData() {
-        if (gps.canGetLocation()) {
-            double lat = gps.getLatitude();
-            double lon = gps.getLongitude();
-            Toast.makeText(getApplicationContext(), "Lat: " + lat + ", Lon: " + lon, Toast.LENGTH_LONG).show();
-        }
-        else {
-            gps.showSettingsAlert();
-            gps.getLocation();
         }
     }
 

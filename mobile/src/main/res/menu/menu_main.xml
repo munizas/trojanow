@@ -9,7 +9,6 @@
         app:showAsAction="ifRoom" />
     <item android:id="@+id/change_feed"
         android:title="Feed" />
-    <item android:id="@+id/action_logout" android:title="@string/action_logout" />
-    <item android:id="@+id/action_test_gps" android:title="GPS"
-        android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/action_logout"
+        android:title="@string/action_logout" />
 </menu>

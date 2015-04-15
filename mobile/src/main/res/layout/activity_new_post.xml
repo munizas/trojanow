@@ -45,6 +45,7 @@
         android:id="@+id/textView4" />
 
     <RadioGroup
+        android:id="@+id/radioGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="0.09">
@@ -52,23 +53,29 @@
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="None"
-            android:id="@+id/radioButton2"
+            android:text="@string/radio_button_none"
+            android:id="@+id/noneRadioButton"
             android:checked="true" />
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Humidity"
-            android:id="@+id/radioButton3"
+            android:text="@string/radio_button_humidity"
+            android:id="@+id/humidityRadioButton"
             android:checked="false" />
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Temperature"
-            android:id="@+id/radioButton"
+            android:text="@string/radio_button_temperature"
+            android:id="@+id/temperatureRadioButton"
             android:checked="false" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/radio_button_pressure"
+            android:id="@+id/pressureRadioButton" />
     </RadioGroup>
 
     <Button

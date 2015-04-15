@@ -37,6 +37,10 @@ public class PostCenter {
         return null;
     }
 
+    public static String formatMessage(String text, SensorCenter.Data type) {
+        return text + " " + SensorCenter.printData(type);
+    }
+
     public static void deletePost(Post post) {
 
     }
