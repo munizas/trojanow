@@ -121,12 +121,17 @@ public class SignUpActivity extends Activity {
             }
             else {
                 final String ID = "id";
+                final String USERNAME = "username";
+                final String EMAIL = "email";
                 try {
                     JSONArray idArray = new JSONArray(returnedData);
                     JSONObject uid = idArray.getJSONObject(0);
                     int id = uid.getInt(ID);
                     Log.e(TAG, "id = " + id);
-                    User.setActiveUserId(id);
+                    String username = uid.getString(USERNAME);
+                    String email = uid.getString(EMAIL);
+                    User user = new User(id, username, email);
+                    User.setActiveUser(user);
                     startActivity(new Intent(SignUpActivity.this, PostListActivity.class));
                 } catch (JSONException e) {
                     e.printStackTrace();

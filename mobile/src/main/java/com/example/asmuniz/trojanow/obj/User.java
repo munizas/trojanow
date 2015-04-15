@@ -7,7 +7,7 @@ package com.example.asmuniz.trojanow.obj;
  */
 public class User {
 
-    private static int activeUserId;
+    private static User activeUser;
 
     private int id;
     private String username;
@@ -39,11 +39,11 @@ public class User {
         this.username = username;
     }
 
-    public static int getActiveUserId() {
-        return activeUserId;
-    }
+    public static User getActiveUser() { return activeUser; }
 
-    public static void setActiveUserId(int userId) {
-        activeUserId = userId;
+    public static void setActiveUser(User user) { activeUser = user; }
+
+    public String toString() {
+        return "User (" + id + "): " + username;
     }
 }

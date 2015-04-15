@@ -3,6 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/action_new_post"
+        android:title="New Post"
+        android:icon="@drawable/ic_action_post_add"
+        app:showAsAction="ifRoom" />
     <item android:id="@+id/change_feed"
         android:title="Feed" />
     <item android:id="@+id/action_logout" android:title="@string/action_logout" />

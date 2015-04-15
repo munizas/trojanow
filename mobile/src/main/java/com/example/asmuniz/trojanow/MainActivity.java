@@ -24,8 +24,8 @@ public class MainActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d(TAG, "active id = " + User.getActiveUserId());
-        if (User.getActiveUserId() != 0)
+        Log.d(TAG, "active user = " + User.getActiveUser());
+        if (User.getActiveUser() != null)
             startActivity(new Intent(this, PostListActivity.class));
     }
 

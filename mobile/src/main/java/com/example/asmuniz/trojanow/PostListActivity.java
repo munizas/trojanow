@@ -85,6 +85,8 @@ public class PostListActivity extends ListActivity {
             case R.id.action_test_gps:
                 showGpsData();
                 return true;
+            case R.id.action_new_post:
+                startActivity(new Intent(PostListActivity.this, NewPostActivity.class));
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -103,14 +105,15 @@ public class PostListActivity extends ListActivity {
     }
 
     private void logout() {
-        User.setActiveUserId(0);
-        Feed.setActiveFeedId(1);
+        User.setActiveUser(null);
+        Feed.setToPublicFeed();
         startActivity(new Intent(PostListActivity.this, MainActivity.class));
+        finish();
     }
 
     private void goGetData() {
         try {
-            URL url = new URL("https://nameless-escarpment-8579.herokuapp.com/get_posts_by_feed?feed_id=" + Feed.getActiveFeedId());
+            URL url = new URL("https://nameless-escarpment-8579.herokuapp.com/get_posts_by_feed?feed_id=" + Feed.getActiveFeed().getId());
             Log.d(TAG, url.toString());
             pd.show();
             new GetPostsTask().execute(url);

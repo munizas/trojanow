@@ -96,6 +96,8 @@ public class SignInActivity extends Activity {
             pd.dismiss();
             Log.e(TAG, returnedData);
             final String ID = "id";
+            final String USERNAME = "username";
+            final String EMAIL = "email";
             try {
                 JSONArray idArray = new JSONArray(returnedData);
                 if (idArray.length() == 0) {
@@ -113,8 +115,11 @@ public class SignInActivity extends Activity {
                 else {
                     JSONObject uid = idArray.getJSONObject(0);
                     int id = uid.getInt(ID);
+                    String username = uid.getString(USERNAME);
+                    String email = uid.getString(EMAIL);
+                    User user = new User(id, username, email);
                     Log.e(TAG, "id = " + id);
-                    User.setActiveUserId(id);
+                    User.setActiveUser(user);
                     startActivity(new Intent(SignInActivity.this, PostListActivity.class));
                     finish();
                 }

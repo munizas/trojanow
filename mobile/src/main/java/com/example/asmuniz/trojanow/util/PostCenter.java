@@ -32,8 +32,9 @@ public class PostCenter {
     // This class is not meant to be subclassed
     private PostCenter() {}
 
-    public static void createPost(User user, Feed feed, String message, SensorCenter.Data sensorType, PostAs postAs) {
-
+    public static Post createPost(User user, int feedId, String message, SensorCenter.Data sensorType, PostAs postAs) {
+        //Post post = new Post.Builder();
+        return null;
     }
 
     public static void deletePost(Post post) {

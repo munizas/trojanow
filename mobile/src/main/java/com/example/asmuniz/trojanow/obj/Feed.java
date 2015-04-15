@@ -10,7 +10,12 @@ import com.example.asmuniz.trojanow.util.FeedCenter;
  */
 public class Feed {
 
-    private static int activeFeedId = 1;
+    private static Feed activeFeed;
+
+    static {
+        activeFeed = new Feed("Public");
+        activeFeed.setId(1);
+    }
 
     private int id;
     private String name;
@@ -35,12 +40,13 @@ public class Feed {
         this.name = name;
     }
 
-    public static int getActiveFeedId() {
-        return activeFeedId;
-    }
+    public static Feed getActiveFeed() { return activeFeed; }
 
-    public static void setActiveFeedId(int feed) {
-        activeFeedId = feed;
+    public static void setActiveFeed(Feed feed) { activeFeed = feed; }
+
+    public static void setToPublicFeed() {
+        activeFeed.setId(1);
+        activeFeed.setName("Public");
     }
 
 }
