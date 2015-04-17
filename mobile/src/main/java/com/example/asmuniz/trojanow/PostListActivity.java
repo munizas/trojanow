@@ -13,7 +13,6 @@ import android.view.MenuInflater;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
-import android.widget.Toast;
 
 import com.example.asmuniz.trojanow.obj.Feed;
 import com.example.asmuniz.trojanow.obj.Post;
@@ -32,7 +31,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -76,6 +74,12 @@ public class PostListActivity extends ListActivity {
         Log.d(TAG, "in onCreateOptionsMenu");
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
+
+        if (Feed.getActiveFeed().getId() == 1) {
+            menu.removeItem(R.id.action_share_feed);
+            menu.removeItem(R.id.action_feed_users);
+        }
+
         return true;
     }
 
@@ -91,8 +95,14 @@ public class PostListActivity extends ListActivity {
             case R.id.action_new_feed:
                 startActivity(new Intent(PostListActivity.this, NewFeedActivity.class));
                 return true;
-            case R.id.change_feed:
+            case R.id.action_change_feed:
                 startActivity(new Intent(PostListActivity.this, SwitchFeedActivity.class));
+                return true;
+            case R.id.action_share_feed:
+                startActivity(new Intent(PostListActivity.this, ShareFeedActivity.class));
+                return true;
+            case R.id.action_feed_users:
+                startActivity(new Intent(PostListActivity.this, FeedUsersActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

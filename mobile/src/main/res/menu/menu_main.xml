@@ -9,10 +9,12 @@
         app:showAsAction="ifRoom" />
     <item android:id="@+id/action_new_feed"
         android:title="New Feed" />
-    <item android:id="@+id/change_feed"
+    <item android:id="@+id/action_change_feed"
         android:title="Switch Feed" />
-    <item android:id="@+id/share_feed"
+    <item android:id="@+id/action_share_feed"
         android:title="Share Feed" />
+    <item android:id="@+id/action_feed_users"
+        android:title="Users in Feed" />
     <item android:id="@+id/action_logout"
         android:title="Logout" />
 </menu>

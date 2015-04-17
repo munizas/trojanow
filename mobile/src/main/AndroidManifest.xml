@@ -40,6 +40,14 @@
             android:name=".SwitchFeedActivity"
             android:label="@string/switch_feed_name" >
         </activity>
+        <activity
+            android:name=".ShareFeedActivity"
+            android:label="@string/switch_feed_name" >
+        </activity>
+        <activity
+            android:name=".FeedUsersActivity"
+            android:label="@string/switch_feed_name" >
+        </activity>
     </application>
 
 </manifest>
