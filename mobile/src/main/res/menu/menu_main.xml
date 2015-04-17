@@ -1,12 +1,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
-    <item android:id="@+id/action_settings" android:title="@string/action_settings"
-        android:orderInCategory="100" app:showAsAction="never" />
     <item android:id="@+id/action_new_post"
         android:title="New Post"
         android:icon="@drawable/ic_action_post_add"
         app:showAsAction="ifRoom" />
+    <item android:id="@+id/action_posts_near_me"
+        android:title="Local Posts" />
     <item android:id="@+id/action_new_feed"
         android:title="New Feed" />
     <item android:id="@+id/action_change_feed"

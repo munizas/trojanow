@@ -51,7 +51,10 @@ public class PostListActivity extends ListActivity {
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
 
-        this.setTitle(getTitle() + " ( " + Feed.getActiveFeed().getName() + " )");
+        if (Post.getRadiusInMiles() != 0)
+            setTitle(" ( " + Feed.getActiveFeed().getName() + ", radius = " + Post.getRadiusInMiles() + "mi )");
+        else
+            setTitle(" ( " + Feed.getActiveFeed().getName() + " )");
 
         pd = new ProgressDialog(this);
         pd.setMessage("Loading posts");
@@ -80,6 +83,9 @@ public class PostListActivity extends ListActivity {
             menu.removeItem(R.id.action_feed_users);
         }
 
+        if (!gps.canGetLocation())
+            menu.removeItem(R.id.action_posts_near_me);
+
         return true;
     }
 
@@ -104,6 +110,9 @@ public class PostListActivity extends ListActivity {
             case R.id.action_feed_users:
                 startActivity(new Intent(PostListActivity.this, FeedUsersActivity.class));
                 return true;
+            case R.id.action_posts_near_me:
+                startActivity(new Intent(PostListActivity.this, LocalPostsActivity.class));
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -112,13 +121,19 @@ public class PostListActivity extends ListActivity {
     private void logout() {
         User.setActiveUser(null);
         Feed.setToPublicFeed();
+        Post.setRadiusInMiles(0);
         startActivity(new Intent(PostListActivity.this, MainActivity.class));
         finish();
     }
 
     private void goGetData() {
         try {
-            URL url = new URL("https://nameless-escarpment-8579.herokuapp.com/get_posts_by_feed?feed_id=" + Feed.getActiveFeed().getId());
+            String req = "";
+            if (Post.getRadiusInMiles() != 0 && gps.canGetLocation())
+                req = "https://nameless-escarpment-8579.herokuapp.com/get_local_posts?feed_id=" + Feed.getActiveFeed().getId() + "&radius=" + Post.getRadiusInMiles() + "&lat=" + gps.getLatitude() + "&lon=" + gps.getLongitude();
+            else
+                req = "https://nameless-escarpment-8579.herokuapp.com/get_posts_by_feed?feed_id=" + Feed.getActiveFeed().getId();
+            URL url = new URL(req);
             Log.d(TAG, url.toString());
             pd.show();
             new GetPostsTask().execute(url);

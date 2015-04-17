@@ -9,6 +9,9 @@ import java.util.Date;
  * to the system.
  */
 public class Post {
+
+    private static int radiusInMiles = 0;
+
     private int id;
     private int userId;
     private String username;
@@ -28,6 +31,10 @@ public class Post {
         this.latitude = builder.latitude;
         this.longitude = builder.longitude;
     }
+
+    public static int getRadiusInMiles() { return radiusInMiles; }
+
+    public static void setRadiusInMiles(int rim) { radiusInMiles = rim; }
 
     public String getMessage() {
         return message;

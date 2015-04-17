@@ -2,6 +2,7 @@
     <string name="app_name">TrojaNow</string>
 
     <string name="switch_feed_name">Switch Feed</string>
+    <string name="local_posts">Set Radius</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="coming_soon">TrojaNow coming soon!</string>

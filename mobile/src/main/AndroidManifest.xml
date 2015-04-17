@@ -48,6 +48,10 @@
             android:name=".FeedUsersActivity"
             android:label="@string/switch_feed_name" >
         </activity>
+        <activity
+            android:name=".LocalPostsActivity"
+            android:label="@string/local_posts" >
+        </activity>
     </application>
 
 </manifest>
