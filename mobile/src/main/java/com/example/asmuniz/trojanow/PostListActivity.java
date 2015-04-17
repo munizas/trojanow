@@ -52,6 +52,9 @@ public class PostListActivity extends ListActivity {
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
+
+        this.setTitle(getTitle() + " ( " + Feed.getActiveFeed().getName() + " )");
+
         pd = new ProgressDialog(this);
         pd.setMessage("Loading posts");
         pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -84,6 +87,13 @@ public class PostListActivity extends ListActivity {
                 return true;
             case R.id.action_new_post:
                 startActivity(new Intent(PostListActivity.this, NewPostActivity.class));
+                return true;
+            case R.id.action_new_feed:
+                startActivity(new Intent(PostListActivity.this, NewFeedActivity.class));
+                return true;
+            case R.id.change_feed:
+                startActivity(new Intent(PostListActivity.this, SwitchFeedActivity.class));
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

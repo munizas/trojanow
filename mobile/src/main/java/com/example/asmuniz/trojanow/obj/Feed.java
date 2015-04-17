@@ -13,14 +13,14 @@ public class Feed {
     private static Feed activeFeed;
 
     static {
-        activeFeed = new Feed("Public");
-        activeFeed.setId(1);
+        activeFeed = new Feed(1, "Public");
     }
 
     private int id;
     private String name;
 
-    public Feed(String name) {
+    public Feed(int id, String name) {
+        this.id = id;
         this.name = name;
     }
 
@@ -47,6 +47,10 @@ public class Feed {
     public static void setToPublicFeed() {
         activeFeed.setId(1);
         activeFeed.setName("Public");
+    }
+
+    public String toString() {
+        return name;
     }
 
 }

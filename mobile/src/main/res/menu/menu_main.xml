@@ -7,8 +7,12 @@
         android:title="New Post"
         android:icon="@drawable/ic_action_post_add"
         app:showAsAction="ifRoom" />
+    <item android:id="@+id/action_new_feed"
+        android:title="New Feed" />
     <item android:id="@+id/change_feed"
-        android:title="Feed" />
+        android:title="Switch Feed" />
+    <item android:id="@+id/share_feed"
+        android:title="Share Feed" />
     <item android:id="@+id/action_logout"
-        android:title="@string/action_logout" />
+        android:title="Logout" />
 </menu>

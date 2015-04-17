@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">TrojaNow</string>
 
+    <string name="switch_feed_name">Switch Feed</string>
+
     <string name="hello_world">Hello world!</string>
     <string name="coming_soon">TrojaNow coming soon!</string>
     <string name="action_settings">Settings</string>
@@ -24,4 +26,6 @@
         <item name="android:shadowDy">1</item>
         <item name="android:shadowRadius">1</item>
     </style>
+
+    <string name="heroku_home_url">https://nameless-escarpment-8579.herokuapp.com/</string>
 </resources>

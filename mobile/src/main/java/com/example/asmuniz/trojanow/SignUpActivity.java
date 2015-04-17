@@ -97,7 +97,7 @@ public class SignUpActivity extends Activity {
 
         @Override
         protected void onPostExecute(String v) {
-            pd.hide();
+            pd.dismiss();
             Log.d(TAG, "user created...");
             Log.e(TAG, returnedData);
             if (returnedData.startsWith("Error")) {
@@ -124,8 +124,7 @@ public class SignUpActivity extends Activity {
                 final String USERNAME = "username";
                 final String EMAIL = "email";
                 try {
-                    JSONArray idArray = new JSONArray(returnedData);
-                    JSONObject uid = idArray.getJSONObject(0);
+                    JSONObject uid = new JSONObject(returnedData);
                     int id = uid.getInt(ID);
                     Log.e(TAG, "id = " + id);
                     String username = uid.getString(USERNAME);
@@ -133,6 +132,7 @@ public class SignUpActivity extends Activity {
                     User user = new User(id, username, email);
                     User.setActiveUser(user);
                     startActivity(new Intent(SignUpActivity.this, PostListActivity.class));
+                    finish();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
