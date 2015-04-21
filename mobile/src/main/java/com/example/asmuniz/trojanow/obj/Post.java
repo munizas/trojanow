@@ -32,6 +32,8 @@ public class Post {
         this.longitude = builder.longitude;
     }
 
+    public int getId() { return id; }
+
     public static int getRadiusInMiles() { return radiusInMiles; }
 
     public static void setRadiusInMiles(int rim) { radiusInMiles = rim; }

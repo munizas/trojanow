@@ -194,7 +194,9 @@ public class NewPostActivity extends Activity {
                     JSONObject uid = idArray.getJSONObject(0);
                     int id = uid.getInt(ID);
                     Log.e(TAG, "id = " + id);
-                    startActivity(new Intent(NewPostActivity.this, PostListActivity.class));
+                    Intent intent = new Intent(NewPostActivity.this, PostListActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
                     finish();
                 }
             } catch (JSONException e) {

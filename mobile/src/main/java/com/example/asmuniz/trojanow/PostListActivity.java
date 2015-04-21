@@ -3,16 +3,18 @@ package com.example.asmuniz.trojanow;
 import com.example.asmuniz.trojanow.obj.User;
 import com.example.asmuniz.trojanow.util.DateUtil;
 
-import android.app.ListActivity;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.example.asmuniz.trojanow.obj.Feed;
 import com.example.asmuniz.trojanow.obj.Post;
@@ -33,23 +35,73 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
+
+import me.pushy.sdk.Pushy;
+import me.pushy.sdk.exceptions.PushyException;
 
 /**
  * Created by asmuniz on 4/12/15.
  */
-public class PostListActivity extends ListActivity {
+public class PostListActivity extends Activity implements SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "post_list";
 
-    private List<Post> postList;
-    private ArrayAdapter<Post> adapter;
+    private static boolean isActive;
+
+    private static Set<Integer> residentPosts;
+    private static List<Post> postList;
+    private static ArrayAdapter<Post> adapter;
     private ProgressDialog pd;
 
     private GPSTracker gps;
 
+    private SwipeRefreshLayout swipeLayout;
+    private ListView listView;
+
+    public static boolean containsPost(int postId) {
+        return residentPosts.contains(postId);
+    }
+
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
+        setContentView(R.layout.activity_post_feed_layout);
+
+        int feedId = getIntent().getIntExtra("feedId", Feed.getActiveFeed().getId());
+        if (feedId != Feed.getActiveFeed().getId()) {
+            if (feedId == 1)
+                Feed.setToPublicFeed();
+            else
+                Feed.setActiveFeed(new Feed(feedId, ""));
+        }
+
+        swipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
+        swipeLayout.setOnRefreshListener(this);
+        swipeLayout.setColorScheme(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+
+        listView = (ListView) findViewById(R.id.list);
+
+        residentPosts = new HashSet<>();
+
+        //------------------------------
+        // Restart the socket service,
+        // in case the user force-closed
+        //------------------------------
+
+        Pushy.listen(this);
+
+        //------------------------------
+        // Register up for push notifications
+        // (will return existing token
+        // if already registered before)
+        //------------------------------
+
+        new RegisterForPushNotifications().execute();
 
         if (Post.getRadiusInMiles() != 0)
             setTitle(" ( " + Feed.getActiveFeed().getName() + ", radius = " + Post.getRadiusInMiles() + "mi )");
@@ -68,8 +120,24 @@ public class PostListActivity extends ListActivity {
         postList = new ArrayList<>();
         // use your custom layout
         adapter = new PostListAdapter(this, R.layout.post_row_layout, postList);
-        setListAdapter(adapter);
+        listView.setAdapter(adapter);
         goGetData();
+    }
+
+    public static boolean isActive() {
+        return isActive;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        isActive = true;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        isActive = false;
     }
 
     @Override
@@ -135,11 +203,17 @@ public class PostListActivity extends ListActivity {
                 req = "https://nameless-escarpment-8579.herokuapp.com/get_posts_by_feed?feed_id=" + Feed.getActiveFeed().getId();
             URL url = new URL(req);
             Log.d(TAG, url.toString());
-            pd.show();
+            if (!swipeLayout.isRefreshing())
+                pd.show();
             new GetPostsTask().execute(url);
         } catch (MalformedURLException e) {
             Log.e(TAG, "Error ", e);
         }
+    }
+
+    @Override
+    public void onRefresh() {
+       goGetData();
     }
 
     private class GetPostsTask extends AsyncTask<URL, Void, ArrayList<Post>> {
@@ -220,12 +294,73 @@ public class PostListActivity extends ListActivity {
         protected void onPostExecute(ArrayList<Post> posts) {
             pd.dismiss();
             postList.clear();
+            residentPosts.clear();
             for (Post post : posts) {
                 postList.add(post);
+                residentPosts.add(post.getId());
                 Log.d(TAG, "Downloaded " + post);
             }
             adapter.notifyDataSetChanged();
+            if (swipeLayout.isRefreshing())
+                swipeLayout.setRefreshing(false);
         }
 
+    }
+
+    private class RegisterForPushNotifications extends AsyncTask<String, Void, String>
+    {
+
+        @Override
+        protected String doInBackground(String... params)
+        {
+            //------------------------------
+            // Temporary string containing
+            // the registration ID result
+            //------------------------------
+
+            String result = "";
+
+            //------------------------------
+            // Get registration ID via Pushy
+            //------------------------------
+
+            try
+            {
+                result = Pushy.register(PostListActivity.this);
+            }
+            catch (PushyException exc)
+            {
+                //------------------------------
+                // Show error instead
+                //------------------------------
+
+                result = exc.getMessage();
+            }
+
+            //------------------------------
+            // Write to log
+            //------------------------------
+
+            Log.d("Pushy", "Registration result: " + result);
+
+            //------------------------------
+            // Return result
+            //------------------------------
+
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(String result)
+        {
+            //------------------------------
+            // Activity died?
+            //------------------------------
+
+            if ( isFinishing() )
+            {
+                return;
+            }
+        }
     }
 }

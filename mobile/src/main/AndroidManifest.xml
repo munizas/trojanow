@@ -5,6 +5,19 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
+    <!-- Pushy Permissions -->
+
+    <!-- Added in Pushy SDK v1.0.0 -->
+    <!--uses-permission android:name="android.permission.INTERNET" /-->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <!-- Added in Pushy SDK v1.0.1 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+    <!-- End Pushy Permissions -->
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -52,6 +65,33 @@
             android:name=".LocalPostsActivity"
             android:label="@string/local_posts" >
         </activity>
+
+        <!-- Pushy Declarations -->
+        <!-- Pushy Notification Receiver -->
+        <receiver android:name=".PushReceiver" >
+            <intent-filter>
+                <action android:name="pushy.me" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Pushy Update Receiver -->
+        <receiver android:name="me.pushy.sdk.receivers.PushyUpdateReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_REPLACED" />
+                <data android:path="com.example.asmuniz.trojanow" android:scheme="package" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Pushy Socket Service -->
+        <service android:name="me.pushy.sdk.services.PushySocketService"/>
+
+        <!-- Pushy Boot Receiver -->
+        <receiver android:name="me.pushy.sdk.receivers.PushyBootReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+        <!-- End Pushy Declarations -->
     </application>
 
 </manifest>
