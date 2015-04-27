@@ -1,7 +1,5 @@
 package com.example.asmuniz.trojanow.obj;
 
-import com.example.asmuniz.trojanow.util.FeedCenter;
-
 /**
  * Created by asmuniz on 3/30/15.
  *
